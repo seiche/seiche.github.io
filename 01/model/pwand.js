@@ -1,4 +1,4 @@
-{
+var pwand = {
 	"flags": 6,
 	"translation": {
 		"x": 0,

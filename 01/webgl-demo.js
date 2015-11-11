@@ -94,7 +94,16 @@ function initBuffers() {
   gl.bindBuffer(gl.ARRAY_BUFFER, cubeVerticesBuffer);
 
   // Now create an array of vertices for the cube.
-
+  var vertices = [];
+  for(var i = 0; i < pwand.vertex_list.length; i++){
+    vertices = vertices.concat([
+      pwand.vertex_list[i].pos.x,
+      pwand.vertex_list[i].pos.y,
+      pwand.vertex_list[i].pos.z
+    ]);
+  }
+  console.log(vertices);
+  /*
   var vertices = [
     // Front face
     -1.0, -1.0,  1.0,
@@ -132,7 +141,7 @@ function initBuffers() {
     -1.0,  1.0,  1.0,
     -1.0,  1.0, -1.0
   ];
-
+  */
   // Now pass the list of vertices into WebGL to build the shape. We
   // do this by creating a Float32Array from the JavaScript array,
   // then use it to fill the current vertex buffer.
@@ -142,14 +151,16 @@ function initBuffers() {
   // Now set up the colors for the faces. We'll use solid colors
   // for each face.
 
-  var colors = [
-    [1.0,  1.0,  1.0,  1.0],    // Front face: white
-    [1.0,  0.0,  0.0,  1.0],    // Back face: red
-    [0.0,  1.0,  0.0,  1.0],    // Top face: green
-    [0.0,  0.0,  1.0,  1.0],    // Bottom face: blue
-    [1.0,  1.0,  0.0,  1.0],    // Right face: yellow
-    [1.0,  0.0,  1.0,  1.0]     // Left face: purple
-  ];
+  var colors = [];
+  for(var i = 0; i < pwand.vertex_list.length; i++){
+    colors.push([
+      //pwand.vertex_list[i].r/255,
+      //pwand.vertex_list[i].g/255,
+      //pwand.vertex_list[i].b/255
+      1.0, 1.0, 1.0, 1.0
+    ]);
+  }
+  console.log(colors);
 
   // Convert the array of colors into a table for all the vertices.
 
@@ -178,7 +189,25 @@ function initBuffers() {
   // This array defines each face as two triangles, using the
   // indices into the vertex array to specify each triangle's
   // position.
+  var total = 1;
+  var indices = pwand.polygon[0].list;
+  var cubeVertexIndices = [];
+  for(var i = 0; i < indices.length - 1; i++){
+    var a = indices[i] + total;
+    var b = indices[i + 1] + total;
+    var c = indices[i + 2] + total;
+    var d = (i) ? indices[i - 1] + total : 0;
 
+    if(!i % 2){
+      cubeVertexIndices = cubeVertexIndices.concat([a,b,c]);
+      cubeVertexIndices = cubeVertexIndices.concat([a,c,b]);
+    }else{
+      cubeVertexIndices = cubeVertexIndices.concat([a,d,b]);
+      cubeVertexIndices = cubeVertexIndices.concat([a,b,d]);
+    }
+  }
+  console.log(cubeVertexIndices);
+  /*
   var cubeVertexIndices = [
     0,  1,  2,      0,  2,  3,    // front
     4,  5,  6,      4,  6,  7,    // back
@@ -187,7 +216,7 @@ function initBuffers() {
     16, 17, 18,     16, 18, 19,   // right
     20, 21, 22,     20, 22, 23    // left
   ]
-
+  */
   // Now send the element array to GL
 
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,
@@ -225,7 +254,7 @@ function drawScene() {
 
   mvPushMatrix();
   mvRotate(cubeRotation, [1, 0, 1]);
-  //mvTranslate([cubeXOffset, cubeYOffset, cubeZOffset]);
+  mvTranslate([cubeXOffset, cubeYOffset, cubeZOffset]);
 
   // Draw the cube by binding the array buffer to the cube's vertices
   // array, setting attributes, and pushing it to GL.
