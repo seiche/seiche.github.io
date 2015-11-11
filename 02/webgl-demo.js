@@ -189,7 +189,7 @@ function initBuffers() {
   // This array defines each face as two triangles, using the
   // indices into the vertex array to specify each triangle's
   // position.
-  var total = 1;
+  var total = 0;
   var indices = pwand.polygon[0].list;
   var cubeVertexIndices = [];
   for(var i = 0; i < indices.length - 1; i++){
@@ -254,7 +254,7 @@ function drawScene() {
 
   mvPushMatrix();
   mvRotate(cubeRotation, [1, 0, 1]);
-  mvTranslate([cubeXOffset, cubeYOffset, cubeZOffset]);
+  //mvTranslate([cubeXOffset, cubeYOffset, cubeZOffset]);
 
   // Draw the cube by binding the array buffer to the cube's vertices
   // array, setting attributes, and pushing it to GL.
