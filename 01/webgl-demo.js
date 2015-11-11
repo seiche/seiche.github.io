@@ -225,7 +225,7 @@ function drawScene() {
 
   mvPushMatrix();
   mvRotate(cubeRotation, [1, 0, 1]);
-  mvTranslate([cubeXOffset, cubeYOffset, cubeZOffset]);
+  //mvTranslate([cubeXOffset, cubeYOffset, cubeZOffset]);
 
   // Draw the cube by binding the array buffer to the cube's vertices
   // array, setting attributes, and pushing it to GL.
