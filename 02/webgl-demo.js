@@ -37,6 +37,7 @@ function start() {
     gl.clearDepth(1.0);                 // Clear everything
     gl.enable(gl.DEPTH_TEST);           // Enable depth testing
     gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
+    gl.enable(gl.CULL_FACE);
 
     // Initialize the shaders; this is where all the lighting for the
     // vertices and so forth is established.
