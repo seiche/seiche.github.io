@@ -39,7 +39,7 @@ function main(){
 	initBuffers();
 	initTexture();
 
-	gl.clearColor(0.0, 0.0, 0.0, 1.0);
+	gl.clearColor(0.15, 0.15, 0.15, 1.0);
 	gl.enable(gl.DEPTH_TEST);
 
 	tick();
